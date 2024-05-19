@@ -20,11 +20,11 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     Button shuffle;
-    int[] cat_images;
+    int[] smile_images;
     int clicked = 0;
     List<ImageButton> buttons;
     ImageButton firstCard, secondCard;
-    int firstCardIndex, secondCardIndex;
+    int firstCardPick, secondCardPick;
     boolean isBusy = false;
 
     @Override
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         buttons = new ArrayList<>();
         loadCards((ArrayList<ImageButton>) buttons);
 
-        cat_images = new int[]{R.drawable.cat1, R.drawable.cat2, R.drawable.cat3, R.drawable.cat4, R.drawable.cat5, R.drawable.cat6,
-                R.drawable.cat1, R.drawable.cat2, R.drawable.cat3, R.drawable.cat4, R.drawable.cat5, R.drawable.cat6};
+        smile_images = new int[]{R.drawable.smile1, R.drawable.smile2, R.drawable.smile3, R.drawable.smile4, R.drawable.smile5, R.drawable.smile6,
+                R.drawable.smile1, R.drawable.smile2, R.drawable.smile3, R.drawable.smile4, R.drawable.smile5, R.drawable.smile6};
 
         for (int i = 0; i < buttons.size(); i++) {
             int finalI = i;
@@ -47,23 +47,23 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (isBusy) return;
-                    buttons.get(finalI).setBackgroundResource(cat_images[finalI]);
+                    buttons.get(finalI).setBackgroundResource(smile_images[finalI]);
 
                     if (clicked == 0) {
                         firstCard = buttons.get(finalI);
-                        firstCardIndex = finalI;
+                        firstCardPick = finalI;
                         clicked++;
                     } else if (clicked == 1) {
                         secondCard = buttons.get(finalI);
-                        secondCardIndex = finalI;
-                        if (firstCardIndex != secondCardIndex && cat_images[firstCardIndex] == cat_images[secondCardIndex]) {
-                            // Matched pair
+                        secondCardPick = finalI;
+                        if (firstCardPick != secondCardPick && smile_images[firstCardPick] == smile_images[secondCardPick]) {
+
                             firstCard.setEnabled(false);
                             secondCard.setEnabled(false);
                             clicked = 0;
                             checkIfGameFinished();
                         } else {
-                            // Not a match
+
                             isBusy = true;
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -86,9 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
                 int i;
                 for (i = 0; i < buttons.size(); i++)
-                    buttons.get(i).setBackgroundResource(cat_images[i]);
+                    buttons.get(i).setBackgroundResource(smile_images[i]);
                 Collections.shuffle(buttons, new Random());
-                Toast.makeText(MainActivity.this, "Game reset", Toast.LENGTH_SHORT).show();
 
                 shuffleGame();
 
@@ -114,12 +113,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void shuffleGame() {
-        Collections.shuffle(Arrays.asList(cat_images), new Random());
+        Collections.shuffle(Arrays.asList(smile_images), new Random());
         for (int i = 0; i < buttons.size(); i++) {
             buttons.get(i).setBackgroundResource(R.drawable.place);
             buttons.get(i).setEnabled(true);
         }
-        Toast.makeText(MainActivity.this, "Game reset", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Game has been ", Toast.LENGTH_SHORT).show();
     }
 
     private void checkIfGameFinished() {
